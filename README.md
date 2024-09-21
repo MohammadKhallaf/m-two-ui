@@ -26,12 +26,45 @@ Bonus:
 - axios
 - 
 ## Project
-- Meals Recieps  -> cart -> wishlit -> filter / categories
+- Meals Recipes  -> cart -> wishlist -> filter / categories
 - Electronics
 - Trello 
 - E learning
+- Hospital Management System
+- Freelance ?? (show portfolio <--> grading)
 
 ## Task
 - complete CRUD products with mongo
 - product details <-- (+) | useLocation | ":id"
 - complete integration with Front (++)
+
+
+----
+
+## 21 sept
+- custom hooks `export const useCart = () => useContext(CartContext);`
+
+- local storage access
+- read -> localStorage.getItem("key")
+- write -> localStorage.setItem("key",data) -> string
+- remove -> localStorage.clearItem("key")
+
+## listen to state update
+
+```jsx
+useEffect ( ()=>{
+
+   
+   return () =>{
+      // destroy
+   }
+
+} , []  )
+```
+1. arg -> callback -> **action**
+2. dep. array -> listen to the dep. ([])
+   1. empty [] -> initial render 
+   2. state [cart,wishlist] -> listen to state/s update
+   3. not exist -> on each render
+
+
