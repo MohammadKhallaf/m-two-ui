@@ -68,3 +68,7 @@ useEffect ( ()=>{
    3. not exist -> on each render
 
 
+## Next tast
+- research redux toolkit
+- update UI flow (wishlist | cart)
+- context -> wishlist | products
