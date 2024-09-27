@@ -72,3 +72,7 @@ useEffect ( ()=>{
 - research redux toolkit
 - update UI flow (wishlist | cart)
 - context -> wishlist | products
+
+
+## Last task
+- migrate to redux toolkit (wishlist | cart)
