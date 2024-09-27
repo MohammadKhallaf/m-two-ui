@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Container } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../store/auth-context";
 
-const LoginPage = () => {
-  const { login } = useAuth();
+const RegisterPage = () => {
+  const { register } = useAuth();
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
@@ -18,11 +18,11 @@ const LoginPage = () => {
       username,
       password,
     };
-    login(user);
+    register(user);
   };
   return (
     <Container className="w-50 border border-primary p-3 rounded shadow-lg">
-      {" "}
+      <h4>Register</h4>
       <Form onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="formBasicUserName">
           <Form.Label>Username</Form.Label>
@@ -49,12 +49,9 @@ const LoginPage = () => {
         <Button variant="primary" type="submit">
           Submit
         </Button>
-        <Button variant="link" as={Link} to="/register" type="button">
-          register
-        </Button>
       </Form>
     </Container>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

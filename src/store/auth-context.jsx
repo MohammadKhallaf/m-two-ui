@@ -1,4 +1,7 @@
+import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext({
   // IDE auto complete only
@@ -10,6 +13,8 @@ const AuthContext = createContext({
 export const useAuth = () => useContext(AuthContext);
 
 function AuthProvider({ children }) {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState(() => {
     const data = localStorage.getItem("user");
     if (data) {
@@ -19,7 +24,34 @@ function AuthProvider({ children }) {
   });
 
   const login = (user) => {
-    setUser(user);
+    // check if the user is authenticated
+    axios
+      .post(process.env.REACT_APP_BASE_URL + "auth/login", { ...user })
+      .then((response) => {
+        setUser(response.data.user);
+        toast.success("Logged in successfully");
+        setTimeout(() => {
+          navigate("/cart");
+        }, 500);
+      })
+      .catch((error) => {
+        toast.error("Something went wrong!");
+      });
+  };
+
+  const register = (user) => {
+    // check if the user is authenticated
+    axios
+      .post(process.env.REACT_APP_BASE_URL + "auth/register", { ...user })
+      .then((response) => {
+        toast.success("Registered successfully");
+        setTimeout(() => {
+          navigate("/login");
+        }, 500);
+      })
+      .catch((error) => {
+        toast.error("Something went wrong!");
+      });
   };
 
   const logout = () => {
@@ -35,7 +67,7 @@ function AuthProvider({ children }) {
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );

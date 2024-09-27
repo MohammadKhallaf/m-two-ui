@@ -9,6 +9,7 @@ import CustomNavbar from "./components/CustomNavbar";
 import AuthProvider from "./store/auth-context";
 import LoginPage from "./pages/LoginPage";
 import { Toaster } from "react-hot-toast";
+import RegisterPage from "./pages/RegisterPage";
 
 // 1. load cards -> UI
 function Layout({ children }) {
@@ -23,13 +24,14 @@ function Layout({ children }) {
 
 function App() {
   return (
-    <AuthProvider>
-      <CartProvider>
-        <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
+        <CartProvider>
           <div className="App">
             <Layout>
               <Container className="py-3">
                 <Routes>
+                  <Route path="register" element={<RegisterPage />} />
                   <Route path="login" element={<LoginPage />} />
                   <Route path="cart" element={<CartPage />} />
                   <Route path="/" element={<HomePage />} />
@@ -38,9 +40,9 @@ function App() {
             </Layout>
             <Toaster />
           </div>
-        </BrowserRouter>
-      </CartProvider>
-    </AuthProvider>
+        </CartProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 

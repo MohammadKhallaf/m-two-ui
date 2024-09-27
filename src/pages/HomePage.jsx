@@ -9,7 +9,7 @@ export default function HomePage() {
   // fetch <-- 1
   // useEffect <-- 0
   function getProductList() {
-    axios.get("http://localhost:5000/products").then((res) => {
+    axios.get(process.env.REACT_APP_BASE_URL + "products").then((res) => {
       setProducts(res.data);
     });
   }
@@ -22,7 +22,7 @@ export default function HomePage() {
       <hr />
       <Row xs={1} md={2} lg={3} xl={4} className="g-4">
         {products.map((item, idx) => (
-          <Col key={idx}>
+          <Col key={item._id}>
             <ProductCard product={item} />
           </Col>
         ))}
