@@ -10,6 +10,8 @@ import AuthProvider from "./store/auth-context";
 import LoginPage from "./pages/LoginPage";
 import { Toaster } from "react-hot-toast";
 import RegisterPage from "./pages/RegisterPage";
+import { Provider } from "react-redux";
+import store from "./store/redux-store";
 
 // 1. load cards -> UI
 function Layout({ children }) {
@@ -25,23 +27,25 @@ function Layout({ children }) {
 function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <CartProvider>
-          <div className="App">
-            <Layout>
-              <Container className="py-3">
-                <Routes>
-                  <Route path="register" element={<RegisterPage />} />
-                  <Route path="login" element={<LoginPage />} />
-                  <Route path="cart" element={<CartPage />} />
-                  <Route path="/" element={<HomePage />} />
-                </Routes>
-              </Container>
-            </Layout>
-            <Toaster />
-          </div>
-        </CartProvider>
-      </AuthProvider>
+      <Provider store={store}>
+        <AuthProvider>
+          <CartProvider>
+            <div className="App">
+              <Layout>
+                <Container className="py-3">
+                  <Routes>
+                    <Route path="register" element={<RegisterPage />} />
+                    <Route path="login" element={<LoginPage />} />
+                    <Route path="cart" element={<CartPage />} />
+                    <Route path="/" element={<HomePage />} />
+                  </Routes>
+                </Container>
+              </Layout>
+              <Toaster />
+            </div>
+          </CartProvider>
+        </AuthProvider>
+      </Provider>
     </BrowserRouter>
   );
 }
