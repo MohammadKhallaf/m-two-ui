@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../store/auth-context";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
   const { login } = useAuth();
@@ -18,7 +19,11 @@ const LoginPage = () => {
       username,
       password,
     };
-    login(user);
+    toast.promise(login(user), {
+      loading: "Logging...",
+      success: <b>Logged In!</b>,
+      error: <b>Could not save.</b>,
+    });
   };
   return (
     <Container className="w-50 border border-primary p-3 rounded shadow-lg">

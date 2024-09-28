@@ -23,20 +23,21 @@ function AuthProvider({ children }) {
     return null;
   });
 
-  const login = (user) => {
+  const login = async (user) => {
     // check if the user is authenticated
-    axios
-      .post(process.env.REACT_APP_BASE_URL + "auth/login", { ...user })
-      .then((response) => {
-        setUser(response.data.user);
-        toast.success("Logged in successfully");
-        setTimeout(() => {
-          navigate("/cart");
-        }, 500);
-      })
-      .catch((error) => {
-        toast.error("Something went wrong!");
-      });
+    // migrate then catch -> "await | async"
+
+    const { data } = await axios.post(
+      process.env.REACT_APP_BASE_URL + "auth/login",
+      { ...user }
+    );
+    const userData = data.user;
+    setUser(userData);
+    setTimeout(() => {
+      navigate("/cart");
+    }, 500);
+
+    console.log("Done!");
   };
 
   const register = (user) => {

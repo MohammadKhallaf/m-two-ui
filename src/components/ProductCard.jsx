@@ -1,10 +1,32 @@
 import { useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import { CartContext } from "../store/cart-context";
+import { CartContext, useCart } from "../store/cart-context";
+import { Stack } from "react-bootstrap";
+import {
+  addToWishlist,
+  removeFromWishlist,
+} from "../store/slices/wishlistSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useSelectWishlist } from "../store/redux-store";
 
 export default function ProductCard({ product }) {
-  const { cart, addToCart } = useContext(CartContext);
+  const { cart, addToCart } = useCart();
+  const wishlist = useSelectWishlist();
+  const dispatch = useDispatch();
+
+  // import and use the addToWishlist action
+  const handleAddToWishlist = () => {
+    // product
+    dispatch(addToWishlist(product));
+  };
+  const handleRemoveFromWishlist = () => {
+    // product
+    dispatch(removeFromWishlist(product));
+  };
+
+  const isInWishlist = wishlist.some((item) => item._id === product._id);
+
   return (
     <Card style={{ width: "18rem" }}>
       <Card.Img variant="top" src={product.image} />
@@ -13,9 +35,20 @@ export default function ProductCard({ product }) {
         <Card.Text>
           {product.description} -<b> {product.price}EGP</b>
         </Card.Text>
-        <Button variant="primary" onClick={() => addToCart(product)}>
-          Add to cart
-        </Button>
+        <Stack gap={3}>
+          <Button variant="primary" onClick={() => addToCart(product)}>
+            Add to cart
+          </Button>
+          {isInWishlist ? (
+            <Button variant="danger" onClick={handleRemoveFromWishlist}>
+              Remove from wishlist
+            </Button>
+          ) : (
+            <Button variant="warning" onClick={handleAddToWishlist}>
+              Add to wishlist
+            </Button>
+          )}
+        </Stack>
       </Card.Body>
     </Card>
   );
