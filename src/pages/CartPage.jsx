@@ -5,6 +5,8 @@ import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { useAuth } from "../store/auth-context";
 import { useCart } from "../store/cart-context";
+import axios from "axios";
+import { useEffect } from "react";
 
 export default function CartPage() {
   const { cart, clearCart } = useCart();
@@ -19,17 +21,54 @@ export default function CartPage() {
     toast.success("Cleared the cart");
   };
 
+  const handleUpdateCart = async () => {
+    const { data } = await axios.post(
+      process.env.REACT_APP_BASE_URL + "cart/merge",
+      cart,
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "x-api-key": process.env.REACT_APP_X_API,
+        },
+      }
+    );
+    console.log(data);
+  };
+
+  const getRemoteCart = async () => {
+    const { data } = await axios.get(process.env.REACT_APP_BASE_URL + "cart", {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+        "x-api-key": process.env.REACT_APP_X_API,
+      },
+    });
+    console.log(data);
+  };
+
+  useEffect(() => {
+    getRemoteCart();
+  }, []);
+
   return (
     <>
       <h2>Cart Page</h2>
       <hr />
-      <Button
-        disabled={!cart.length}
-        variant="danger"
-        onClick={handleClearCart}
-      >
-        Clear cart
-      </Button>
+      <Stack direction="horizontal" gap={2}>
+        <Button
+          disabled={!cart.length}
+          variant="danger"
+          onClick={handleClearCart}
+        >
+          Clear cart
+        </Button>
+        <Button
+          disabled={!cart.length}
+          variant="success"
+          onClick={handleUpdateCart}
+        >
+          Update Your Cart{" "}
+        </Button>
+      </Stack>
       <hr />
       <Row xs={1} className="g-4">
         {cart.map((item, idx) => (

@@ -40,7 +40,7 @@ export default function ProductCard({ product }) {
           <Button as={Link} to={`/products/${product._id}`}>
             Product Details{" "}
           </Button>
-          <Button variant="secondary" onClick={() => addToCart(product)}>
+          <Button variant="secondary" onClick={() => addToCart({ ...product })}>
             Add to cart
           </Button>
           {isInWishlist ? (

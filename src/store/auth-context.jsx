@@ -31,7 +31,8 @@ function AuthProvider({ children }) {
       process.env.REACT_APP_BASE_URL + "auth/login",
       { ...user }
     );
-    const userData = data.user;
+    const userData = { ...data.user, token: data.token };
+
     setUser(userData);
     setTimeout(() => {
       navigate("/cart");
