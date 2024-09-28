@@ -1,27 +1,39 @@
+import { Button, Stack } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import ProductCard from "../components/ProductCard";
-import { useContext } from "react";
-import { CartContext } from "../store/cart-context";
-import { Button, Stack } from "react-bootstrap";
-import { useAuth } from "../store/auth-context";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { useAuth } from "../store/auth-context";
+import { useCart } from "../store/cart-context";
 
 export default function CartPage() {
-  const { cart, addToCart } = useContext(CartContext);
-  const { user, login, logout } = useAuth();
+  const { cart, clearCart } = useCart();
+  const { user } = useAuth();
 
   const sum = cart.reduce((prev, item) => {
     return +item.price + prev;
   }, 0);
 
+  const handleClearCart = () => {
+    clearCart();
+    toast.success("Cleared the cart");
+  };
+
   return (
     <>
       <h2>Cart Page</h2>
       <hr />
+      <Button
+        disabled={!cart.length}
+        variant="danger"
+        onClick={handleClearCart}
+      >
+        Clear cart
+      </Button>
+      <hr />
       <Row xs={1} className="g-4">
         {cart.map((item, idx) => (
-          <Col key={idx}>
+          <Col key={item._id}>
             <Stack direction="horizontal" className="gap-3">
               <img src={item.image} style={{ width: "8rem" }} alt="" />
               <Stack className="align-items-start">
@@ -52,15 +64,6 @@ export default function CartPage() {
             Login
           </Button>
         )}
-
-        <Button
-          variant="danger"
-          onClick={() => {
-            logout();
-          }}
-        >
-          Logout
-        </Button>
       </Stack>
     </>
   );

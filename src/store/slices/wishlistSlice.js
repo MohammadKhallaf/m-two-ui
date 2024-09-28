@@ -16,10 +16,13 @@ const wishlistSlice = createSlice({
         return item._id !== action.payload._id;
       });
     },
+    clearWishlist(state, action) {
+      return [];
+    },
   },
 });
 
 // export actions
-export const { setWishlist, addToWishlist, removeFromWishlist } =
+export const { setWishlist, addToWishlist, removeFromWishlist, clearWishlist } =
   wishlistSlice.actions;
 export default wishlistSlice.reducer;

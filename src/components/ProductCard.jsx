@@ -9,6 +9,7 @@ import {
 } from "../store/slices/wishlistSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useSelectWishlist } from "../store/redux-store";
+import { Link } from "react-router-dom";
 
 export default function ProductCard({ product }) {
   const { cart, addToCart } = useCart();
@@ -36,7 +37,10 @@ export default function ProductCard({ product }) {
           {product.description} -<b> {product.price}EGP</b>
         </Card.Text>
         <Stack gap={3}>
-          <Button variant="primary" onClick={() => addToCart(product)}>
+          <Button as={Link} to={`/products/${product._id}`}>
+            Product Details{" "}
+          </Button>
+          <Button variant="secondary" onClick={() => addToCart(product)}>
             Add to cart
           </Button>
           {isInWishlist ? (
@@ -44,7 +48,7 @@ export default function ProductCard({ product }) {
               Remove from wishlist
             </Button>
           ) : (
-            <Button variant="warning" onClick={handleAddToWishlist}>
+            <Button variant="secondary" onClick={handleAddToWishlist}>
               Add to wishlist
             </Button>
           )}

@@ -40,6 +40,10 @@ function CartProvider({ children }) {
     });
   };
 
+  const clearCart = () => {
+    setCart([]);
+  };
+
   // listen to cart update
   // save to local storage
   useEffect(() => {
@@ -48,7 +52,7 @@ function CartProvider({ children }) {
   }, [cart]);
 
   return (
-    <CartContext.Provider value={{ cart, addToCart }}>
+    <CartContext.Provider value={{ cart, addToCart, clearCart }}>
       {children}
     </CartContext.Provider>
   );

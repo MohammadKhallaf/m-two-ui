@@ -76,3 +76,6 @@ useEffect ( ()=>{
 
 ## Last task
 - migrate to redux toolkit (wishlist | cart)
+
+## Bonus
+- manage local storage read and write => wishlist 

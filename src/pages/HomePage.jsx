@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import ProductCard from "../components/ProductCard";
@@ -20,6 +20,7 @@ export default function HomePage() {
   useEffect(() => {
     getProductList();
   }, []);
+
   return (
     <>
       <h2>Product List</h2>

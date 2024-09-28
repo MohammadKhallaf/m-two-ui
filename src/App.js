@@ -12,6 +12,8 @@ import { Toaster } from "react-hot-toast";
 import RegisterPage from "./pages/RegisterPage";
 import { Provider } from "react-redux";
 import store from "./store/redux-store";
+import ProductDetails from "./pages/ProductDetails";
+import WishlistPage from "./pages/WishlistPage";
 
 // 1. load cards -> UI
 function Layout({ children }) {
@@ -34,8 +36,11 @@ function App() {
               <Layout>
                 <Container className="py-3">
                   <Routes>
+                    <Route path="products/:id" element={<ProductDetails />} />
+                    <Route path="products" element={<HomePage />} />
                     <Route path="register" element={<RegisterPage />} />
                     <Route path="login" element={<LoginPage />} />
+                    <Route path="wishlist" element={<WishlistPage />} />
                     <Route path="cart" element={<CartPage />} />
                     <Route path="/" element={<HomePage />} />
                   </Routes>
