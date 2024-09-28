@@ -3,9 +3,13 @@ import { Badge, Container, Nav, Navbar } from "react-bootstrap";
 import { useCart } from "../store/cart-context";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useAuth } from "../store/auth-context";
 
 function CustomNavbar() {
   const { cart } = useCart();
+  // read
+  const { user, logout } = useAuth(); // context
+
   const wishlist = useSelector((state) => state.wishlist);
   const itemsCount = cart.length;
 
@@ -30,16 +34,25 @@ function CustomNavbar() {
                 {itemsCount}
               </Badge>
             </Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
+            <NavDropdown title="Account" id="basic-nav-dropdown">
+              {user?._id ? (
+                <>
+                  <NavDropdown.Item href="#">{user?.username}</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                </>
+              ) : null}
+              {user?._id ? (
+                <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
+              ) : (
+                <>
+                  <NavDropdown.Item as={Link} to="/login">
+                    Login
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/register">
+                    Register
+                  </NavDropdown.Item>
+                </>
+              )}
             </NavDropdown>
           </Nav>{" "}
         </Navbar.Collapse>
